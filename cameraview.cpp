@@ -2,7 +2,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QGestureEvent>
-//#include <QOpenGLWidget>
 #include <QDebug>
 
 CameraView::CameraView(QWidget *parent) : QGraphicsView(parent)
@@ -34,9 +33,9 @@ void CameraView::scaleByFactor(qreal factor)
 
 void CameraView::setScaleFactor(const qreal scale_factor)
 {
-    QMatrix matrix;
+    QTransform matrix;
     matrix.scale(scale_factor, scale_factor);
-    setMatrix(matrix);
+    setTransform(matrix);
     m_scale_factor = scale_factor;
     qDebug()<<"Camera view scale factor set:"<<m_scale_factor;
 }
@@ -83,7 +82,7 @@ void CameraView::pinchTriggered(QPinchGesture *gesture)
     }
     // Compute the scale factor based on the current pinch level
     qreal sxy = m_scale_factor * currentStepScaleFactor;
-    QMatrix matrix;
+    QTransform matrix;
     matrix.scale(sxy, sxy);
-    setMatrix(matrix);
+    setTransform(matrix);
 }

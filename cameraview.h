@@ -2,12 +2,14 @@
 #define CAMERAVIEW_H
 
 #include <QGraphicsView>
+#include <QTransform>
 class QGraphicsPixmapItem;
 class QGestureEvent;
 class QPinchGesture;
 
 class CameraView : public QGraphicsView
 {
+    Q_OBJECT    // Required if using signals/slots
 public:
     CameraView(QWidget *parent = Q_NULLPTR);
 

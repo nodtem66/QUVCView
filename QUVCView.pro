@@ -1,6 +1,5 @@
-QT += core gui
+QT += core gui widgets
 TARGET = QUVCView
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 
@@ -44,36 +43,12 @@ FORMS += \
     uvccontrolwidget.ui \
     videowriterwidget.ui
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
 RESOURCES += \
     resources.qrc
 
-macx {
-    ICON = icons/QUVCView.icns
-    QMAKE_INFO_PLIST = Info.plist
-    CONFIG += app_bundle
+ICON = icons/QUVCView.icns
+QMAKE_INFO_PLIST = Info.plist
+CONFIG += app_bundle
 
-    #include OpenCV and automatically select version
-    OPENCV_PATH = $$files(/usr/local/Cellar/opencv/*)
-    message(Using OpenCV at: $$OPENCV_PATH)
-
-    LIBS += -L/$$OPENCV_PATH/lib/ \
-            -lopencv_core \
-            -lopencv_imgproc \
-            -lopencv_videoio
-
-    INCLUDEPATH += $$OPENCV_PATH/include/opencv4
-    DEPENDPATH += $$OPENCV_PATH/include
-
-    LIBUVC_PATH = $$files(/usr/local/Cellar/libuvc/*)
-    message(Using libUVC at: $$LIBUVC_PATH)
-    LIBS += -L/$$LIBUVC_PATH/lib/ \
-            -luvc
-
-    INCLUDEPATH += $$LIBUVC_PATH/include
-    DEPENDPATH += $$LIBUVC_PATH/include
-}
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += libuvc opencv4
